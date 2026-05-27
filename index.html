@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Hossein Savari • @H_LIMBO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="main-container">
+        <!-- ========== ستون چپ - سایدبار ========== -->
+        <div class="column-left">
+            <!-- موزیک پلیر اسپاتیفای -->
+			<div class="spotify-player" id="spotifyPlayer">
+				<audio id="spotifyAudio" preload="metadata"></audio>
+				
+				<!-- آرت ورک -->
+				<div class="player-artwork" id="playerArtwork">
+					<div class="player-artwork-placeholder">
+						<img id="coverArt" src="" alt="cover">
+					</div>
+				</div>
+				
+				<!-- اطلاعات آهنگ -->
+				<div class="song-info-spotify">
+					<div class="song-title-spotify" id="songTitle">Select a track</div>
+					<div class="song-artist-spotify" id="songArtist">🎵 Playlist</div>
+				</div>
+				
+				<!-- نوار پیشرفت -->
+				<div class="progress-spotify">
+					<div class="progress-bar-spotify" id="spotifyProgressContainer">
+						<div class="progress-fill-spotify" id="spotifyProgressFill"></div>
+					</div>
+					<div class="time-spotify">
+						<span id="currentTimeSpotify">0:00</span>
+						<span id="durationSpotify">0:00</span>
+					</div>
+				</div>
+				
+				<!-- کنترل‌ها -->
+				<div class="spotify-controls">
+					<button class="spotify-ctrl-btn" onclick="prevTrack()">
+						<i class="fas fa-step-backward"></i>
+					</button>
+					
+					<button class="spotify-ctrl-btn" onclick="skipTime(-10)">
+						<i class="fas fa-backward"></i>
+					</button>
+					
+					<button class="spotify-play-btn" id="spotifyPlayBtn">
+						<i class="fas fa-play"></i>
+					</button>
+					
+					<button class="spotify-ctrl-btn" onclick="skipTime(10)">
+						<i class="fas fa-forward"></i>
+					</button>
+					
+					<button class="spotify-ctrl-btn" onclick="nextTrack()">
+						<i class="fas fa-step-forward"></i>
+					</button>
+				</div>
+				
+				<!-- کنترل صدا -->
+				<div class="spotify-volume">
+					<i class="fas fa-volume-up" id="spotifyVolumeIcon"></i>
+					<input type="range" class="spotify-volume-slider" id="spotifyVolumeSlider" min="0" max="100" value="70">
+				</div>
+			</div>
+
+            <!-- پیام ناشناس -->
+            <div class="anonymous-box">
+                <h3><i class="fas fa-mask"></i> پیام ناشناس</h3>
+                <textarea 
+                    class="anonymous-input" 
+                    id="anonymousMessage" 
+                    placeholder="!!!کاملا ناشناس"
+                    maxlength="500"
+                ></textarea>
+                <div class="anonymous-counter">
+                    <span id="charCount">0</span>/500
+                </div>
+                <button class="anonymous-submit" onclick="sendAnonymousMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                    ارسال ناشناس
+                </button>
+                <div class="anonymous-note">
+                    <i class="fas fa-shield-alt"></i> کاملاً ناشناس • بدون ردگیری
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== ستون وسط - توییتر پورتفولیو ========== -->
+        <div class="column-center">
+            <div class="x-portfolio">
+                <!-- BANNER IFRAME -->
+                <div class="banner-iframe-wrapper" id="bannerContainer">
+                    <iframe 
+                        src="./banner.html" 
+                        title="Portfolio Banner"
+                        loading="lazy"
+                        sandbox="allow-scripts allow-same-origin"
+                        onerror="handleBannerError()"
+                        onload="this.style.opacity='1'"
+                        style="opacity: 0; transition: opacity 0.4s;">
+                    </iframe>
+                </div>
+
+                <!-- PROFILE HEADER -->
+                <div class="profile-header">
+                    <div class="avatar">
+                        <img src="./assets/L.png" alt="avatar">
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="btn" onclick="window.open('./banner.html', '_blank')"><i class="fas fa-ellipsis-h"></i></button>
+                        <button class="btn" onclick="alert('داداش اون پایین برات لینک تلگرامو اینا گزاشتم بیا پیامم بده.')"><i class="far fa-envelope"></i> Message</button>
+                        <button class="btn primary" onclick="alert('✅ Follow')"><i class="fas fa-user-plus"></i> Follow</button>
+                    </div>
+                </div>
+
+                <!-- USER INFO -->
+                <div class="user-info">
+                    <div class="name">
+                        Hossein Savari <i class="fas fa-check-circle verified-badge"></i>
+                    </div>
+                    <div class="username">@H_LIMBO</div>
+                    <div class="bio">
+                        🧠 Creative developer & Editor & CarsTecnicalExpert • INTP, engaged to M 💍🌚.<br>
+                        ✦ <a href="#">Hossein.Savari</a> ✦ Available for collaborations<br>
+                        <span style="color:#1d9bf0;">#Dev</span> <span style="color:#1d9bf0;">#Arab🌴</span>
+                    </div>
+                    <div class="meta-row">
+                        <span><i class="fas fa-map-marker-alt"></i> IRAN • AHVAZ</span>
+                        <span><i class="fas fa-link"></i> <a href="#" style="color:#1d9bf0; text-decoration:none;">MyPortfilio</a></span>
+                        <span><i class="far fa-calendar-alt"></i> 2006.9.21</span>
+                    </div>
+                    <div class="follow-stats">
+                        <span>119</span> Following &nbsp;&nbsp; <span>120.3K</span> Followers
+                    </div>
+                </div>
+
+                <!-- لینک‌های اضافی -->
+                <div class="links-section">
+                    <a href="https://t.me/Real_limbo" class="link-pill"><i class="fab fa-telegram"></i> Telegram</a>
+                    <a href="#" class="link-pill"><i class="fab fa-github"></i> Github</a>
+                    <a href="https://www.instagram.com/h._.limbo" class="link-pill"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://rubika.ir/FAKE_LIMBO" class="link-pill"><i class="far fa-envelope"></i> Rubika</a>
+                    <a href="#" class="link-pill"><i class="fas fa-globe"></i> Website</a>
+                </div>
+
+                <!-- TABS -->
+                <div class="tabs">
+                    <div class="tab active" data-tab="projects"><i class="far fa-user"></i> Posts</div>
+                    <div class="tab" data-tab="media"><i class="far fa-image"></i> Media</div>
+                    <div class="tab" data-tab="likes"><i class="far fa-heart"></i> Likes</div>
+                </div>
+
+                <!-- TAB: Posts -->
+                <div class="tab-content active" id="projects">
+                    <div class="tweet-card pinned-badge">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar-small">
+                                <img src="./assets/L.png" alt="avatar">
+                            </div>
+                            <div>
+                                <div class="tweet-user">📌 Pinned <span style="color:#71767b; font-weight:400;">· Hossein Savari</span></div>
+                                <div class="tweet-handle">@H_LIMBO · Mar 15</div>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            <div class="project-title"><i class="fas fa-bolt" style="color:#1d9bf0;"></i> !سایت بزرگ من باز شد</div>
+                            <div>!!اینم از سایتی که کل عمر منتظرش بودم و الان ساخته شد</div>
+                            <div>تصمیم گرفتم فعلا فقط یه پورتفیلیو باشه تا بعد حالا</div>
+                            <div style="margin-top:8px; display:flex; gap:10px; flex-wrap:wrap;">
+                                <span style="background:#1d2c38; padding:4px 12px; border-radius:20px; font-size:0.8rem;">#html</span>
+                                <span style="background:#1d2c38; padding:4px 12px; border-radius:20px; font-size:0.8rem;">#website</span>
+                            </div>
+                            <div class="tweet-actions">
+                                <span><i class="far fa-comment"></i> 41</span>
+                                <span><i class="fas fa-retweet"></i> 89</span>
+                                <span><i class="far fa-heart"></i> 512</span>
+                                <span><i class="fas fa-share"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar-small">
+                                <img src="./assets/L.png" alt="avatar">
+                            </div>
+                            <div>
+                                <div class="tweet-user">Hossein Savari <i class="fas fa-check-circle verified"></i></div>
+                                <div class="tweet-handle">@H_LIMBO · 2h</div>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            <div class="project-title"><i class="fas fa-heart" style="color:#1d9bf0;"></i> ... حرف دل</div>
+                            <div>شهر خوابیده، اما خیابان‌ها هنوز نفس می‌کشند؛ کم‌صدا، آرام، مثل کسی که نمی‌خواهد خاطره‌ای را بیدار کند. قدم می‌زنم و صدای پاهایم تنها چیزی‌ست که باقی مانده. باد خنکی از لابه‌لای درخت‌ها رد می‌شود و انگار هر برگ، جمله‌ای نیمه‌تمام را زمزمه می‌کند. انگار جهان در این ساعت چیزی را اعتراف می‌کند که هیچ‌وقت در روشنایی روز جرأت گفتنش را ندارد. چراغ‌های زرد خیابان، دامنهٔ سایه‌ام را تا دوردست می‌کِشند؛ سایه‌ای که از من جلوتر می‌رود، بی‌هیچ عجله‌ای انگار خودش می‌داند به کجا باید برسد، و من فقط دنبال ردّش راه می‌افتم. در این ساعت، آدم با خودش روبه‌رو می‌شود؛ با فکرهایی که تمام روز از آن‌ها فرار کرده، با قلبی که بالاخره فرصت دارد آرام حرف بزند، بی‌فریاد، بی‌نگاه، بی‌نقاب. نمی‌دانم مقصد این قدم‌ها کجاست، اما هر قدم، باری را از روی شانه‌هایم برمی‌دارد، هر نفس، مثل پاک‌کردن غبار از پنجره‌ای قدیمی است. شاید راز ساعت 3همین باشد: ساعتی که جهان خواب است، اما آدم بالاخره بیدار می‌شود.</div>
+                            <div class="tweet-image">
+                                <img src="./assets/L2.png" alt="image">
+                            </div>
+                            <div class="tweet-actions">
+                                <span><i class="far fa-comment"></i> 24</span>
+                                <span><i class="fas fa-retweet"></i> 18</span>
+                                <span><i class="far fa-heart"></i> 142</span>
+                                <span><i class="fas fa-share"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar-small">
+                                <img src="./assets/L.png" alt="avatar">
+                            </div>
+                            <div>
+                                <div class="tweet-user">Hossein Savari <i class="fas fa-check-circle verified"></i></div>
+                                <div class="tweet-handle">@H_LIMBO · 1d</div>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            <div class="project-title"><i class="far fa-smile" style="color:#1d9bf0;"></i> My friend</div>
+                            <div>My Boy Masoud <a href="https://t.me/xco_17z" style="color:#1d9bf0;">@xco_17z</a>.</div>
+                            <div class="tweet-image">
+                                <img src="./assets/L3.png" alt="image">
+                            </div>
+                            <div class="tweet-actions">
+                                <span><i class="far fa-comment"></i> 9</span>
+                                <span><i class="fas fa-retweet"></i> 27</span>
+                                <span><i class="far fa-heart"></i> 203</span>
+                                <span><i class="fas fa-share"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: Media -->
+                <div class="tab-content" id="media">
+                    <div style="padding: 30px; text-align: center; color: #71767b;">
+                        <i class="fas fa-photo-video" style="font-size: 3rem; display: block; margin-bottom: 15px; opacity: 0.4;"></i>
+                        <p style="font-size: 1rem;">🎨 Media gallery coming soon</p>
+                        <p style="font-size: 0.8rem; margin-top: 8px;">Screenshots, videos, and design previews</p>
+                        <div style="display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap;">
+                            <div style="width: 120px; height: 120px; background: #16181c; border-radius: 12px; border: 1px solid #2f3336; display: flex; align-items: center; justify-content: center;"><i class="fas fa-image" style="font-size: 2rem; opacity: 0.3;"></i></div>
+                            <div style="width: 120px; height: 120px; background: #16181c; border-radius: 12px; border: 1px solid #2f3336; display: flex; align-items: center; justify-content: center;"><i class="fas fa-video" style="font-size: 2rem; opacity: 0.3;"></i></div>
+                            <div style="width: 120px; height: 120px; background: #16181c; border-radius: 12px; border: 1px solid #2f3336; display: flex; align-items: center; justify-content: center;"><i class="fas fa-palette" style="font-size: 2rem; opacity: 0.3;"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: Likes -->
+                <div class="tab-content" id="likes">
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar-small">
+                                <img src="./assets/M.png" alt="avatar">
+                            </div>
+                            <div>
+                                <div class="tweet-user">Masoud | مسعود <i class="fas fa-check-circle verified"></i></div>
+                                <div class="tweet-handle">@xco_17z · 3h</div>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            <div>....عه به تخ</div>
+                            <div class="tweet-actions">
+                                <span><i class="far fa-heart" style="color:#e0245e;"></i> 2.4K</span>
+                                <span><i class="far fa-comment"></i> 89</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar-small">
+                                <img src="./assets/M2.png" alt="avatar">
+                            </div>
+                            <div>
+                                <div class="tweet-user">Abtin N</div>
+                                <div class="tweet-handle">@Nothing_2568 · 5h</div>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            <div>نبرد استالینگراد یکی از بی‌رحمانه‌ترین نبرد‌های نظامی جنگ جهانی دوم بود که بین نیروهای روسیه با آلمان نازی و متحدین آن (قدرت‌های محور) در گرفت. این نبرد که از اوت سال ۱۹۴۲ تا فوریه ۱۹۴۳ به طول انجامید و موجب آسیب و مرگ دو میلیون انسان شد، لقب یکی از بزرگ‌ترین، طولانی‌ترین و خونین‌ترین درگیری‌های جنگاوری نوین را گرفته است. بیش از دو میلیون گروه ارتش در این جنگ به نبرد تن به تن پرداختند و حدود دو میلیون نفر، از جمله ده‌ها هزار شهروند روسیه جان خود را از دست دادند.</div>
+                            <div class="tweet-actions">
+                                <span><i class="far fa-heart" style="color:#e0245e;"></i> 1.8K</span>
+                                <span><i class="far fa-comment"></i> 56</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-note">
+                    <i class="fab fa-x-twitter"></i> MADE BY H_LIMBO WITH ❤
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== ستون راست - جای خالی برای آینده ========== -->
+        <div class="column-right">
+
+			<div class="right-sidebar-box">
+				<h3><i class="fas fa-quote-right" style="color:#10b981;"></i> نقل قول</h3>
+				<div id="randomQuote" style="color:#ffffff; font-size:0.85rem; line-height:1.8; margin-top:12px; font-style:italic; text-align:center;">
+					"The only way to do great work is to love what you do."<br>
+					<span style="color:#536471; font-size:0.7rem; display:block; margin-top:8px;">— Steve Jobs</span>
+				</div>
+			</div>
+			<script>
+			const quotes = [
+				// انگیزشی
+				{text:"تنها راه انجام کار بزرگ، عشق ورزیدن به کاریه که انجام میدی.", author:"— استیو جابز"},
+				{text:"موفقیت یعنی از شکستی به شکست دیگر رفتن، بدون از دست دادن اشتیاق.", author:"— وینستون چرچیل"},
+				{text:"تسلیم نشو، شاید یک قدم تا موفقیت فاصله داشته باشی.", author:"— H_LIMBO"},
+				{text:"ساعت ۳ صبح غم انگیزترین ساعت جهانه... ولی سکوتش از هر چیزی صادق‌تره.", author:"— H_LIMBO"},
+				
+				// زندگی و حال خوب
+				{text:"زندگی یا یه ماجراجویی جسورانه‌ست، یا هیچی.", author:"— هلن کلر"},
+				{text:"خوشبختی چیزیه که خودت می‌سازی، نه چیزی که پیدا می‌کنی.", author:"— رالف والدو امرسون"},
+				{text:"گاهی وقتا باید بذاری زندگی غافلگیرت کنه.", author:"— ناشناس"},
+				{text:"همیشه ته قلبت یه آسمون پر ستاره هست، فقط گاهی یادت میره بالا رو نگاه کنی.", author:"— H_LIMBO"},
+				
+				// عشق و احساس
+				{text:"عشق یعنی توی تاریکی، دست کسی رو بگیری و دیگه نترسی.", author:"— ناشناس"},
+				{text:"قلب منطق خودش رو داره که عقل از درکش عاجزه.", author:"— بلز پاسکال"},
+				{text:"آدمیزاد عجیبه: از یکی متنفره ولی بازم دوسش داره.", author:"— H_LIMBO"},
+				{text:"بعضی آدما مثل بارون می‌مونن... نمی‌بینی از کجا اومدن ولی خیست می‌کنن.", author:"— ناشناس"},
+				
+				// شب و تنهایی
+				{text:"شب‌ها مغز آدم بیشتر درد می‌کنه تا صبح‌ها.", author:"— H_LIMBO"},
+				{text:"سکوت گاهی از هزاران کلمه، حرف بیشتری می‌زنه.", author:"— ناشناس"},
+				{text:"ساعت ۳ صبح وقت اعترافه... وقت حرفایی که تو روشنایی نمیشه زد.", author:"— H_LIMBO"},
+				{text:"بعضی وقتا باید تنهایی قدم بزنی تا خودتو پیدا کنی.", author:"— ناشناس"},
+				
+				// فلسفی و عمیق
+				{text:"اون کسی که می‌گه می‌دونه، نمی‌دونه. اونی که می‌دونه، نمی‌گه.", author:"— لائوتسه"},
+				{text:"تنها چیزی که در جهان ثابته، تغییره.", author:"— هراکلیتوس"},
+				{text:"من فکر می‌کنم، پس هستم. ولی گاهی فکر نکردن هم خودش یه جور زندگیه.", author:"— H_LIMBO"},
+				{text:"حقیقت همون چیزیه که وقتی همه خوابن، تو بیداری بهش فکر می‌کنی.", author:"— ناشناس"},
+				
+				// قوی بودن
+				{text:"نمیشه جلوی باد رو گرفت، ولی می‌شه بادبون رو تنظیم کرد.", author:"— ناشناس"},
+				{text:"قوی بودن یعنی حتی وقتی از درون له شدی، بازم بخندی.", author:"— H_LIMBO"},
+				{text:"اونقدر قوی باش که هیچکس و هیچچیز آرامشت رو بهم نزنه.", author:"— ناشناس"},
+				{text:"زخم‌ها نشونهٔ زنده موندنن، نه شکست خوردن.", author:"— ناشناس"},
+				
+				// امید و آینده
+				{text:"تا وقتی نفس می‌کشی، هنوز داستان تموم نشده.", author:"— ناشناس"},
+				{text:"بهترین چیزها همونایی‌ان که هنوز نیومدن.", author:"— ناشناس"},
+				{text:"نگران فردا نباش، امروزت رو درست کن.", author:"— ناشناس"},
+				{text:"هر طوفانی یه روز آروم میشه، فقط صبر داشته باش.", author:"— H_LIMBO"},
+				
+				// خودت باش
+				{text:"خودت باش، بقیه‌شو بسپر به زندگی.", author:"— اسکار وایلد"},
+				{text:"دیوونه‌ها همیشه عوض می‌کنن، عاقل‌ها همیشه سازگار می‌شن.", author:"— ناشناس"},
+				{text:"عادی بودن خسته‌کننده‌ست؛ یه کم عجیب باش.", author:"— H_LIMBO"},
+				{text:"توی دنیایی که همه سعی دارن یکی دیگه باشن، خودت موندن بزرگترین هنره.", author:"— ناشناس"}
+			];
+			const quote = quotes[Math.floor(Math.random() * quotes.length)];
+			document.getElementById('randomQuote').innerHTML = `"${quote.text}"<br><span style="color:#536471; font-size:0.7rem; display:block; margin-top:8px;">${quote.author}</span>`;
+			</script>			
+        </div>
+    </div>
+	
+
+    <script>
+        // ========== BANNER ERROR HANDLER ==========
+        function handleBannerError() {
+            const container = document.getElementById('bannerContainer');
+            container.innerHTML = `
+                <div class="banner-fallback" onclick="alert('⚠️ فایل banner.html لود نشد.\\nمطمئن شو فایل تو همون مسیر هست.')">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>بنر لود نشد • فایل banner.html رو چک کن</span>
+                </div>
+            `;
+        }
+
+        setTimeout(() => {
+            const iframe = document.querySelector('.banner-iframe-wrapper iframe');
+            if (iframe && iframe.style.opacity === '0') {
+                handleBannerError();
+            }
+        }, 3000);
+
+        // ========== TAB SWITCHING ==========
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // ========== INTERACTIVE LIKE BUTTONS ==========
+        document.querySelectorAll('.tweet-actions span').forEach(action => {
+            action.addEventListener('click', function(e) {
+                const icon = this.querySelector('i');
+                if (icon && icon.classList.contains('fa-heart')) {
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        icon.style.color = '#e0245e';
+                        this.style.color = '#e0245e';
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        icon.style.color = '';
+                        this.style.color = '';
+                    }
+                }
+            });
+        });
+
+		// ========== SPOTIFY PLAYLIST PLAYER ==========
+		// ========== SPOTIFY PLAYLIST WITH COLORS ==========
+		const playlist = [
+			{
+				title: "3 am walk (Slowed & Reverb)",
+				artist: "Daniel.mp3 • Relax",
+				src: "https://dl.musicinsight.ir/Single/%20Daniel.mp3/3%20am%20walk/02%20-%20Daniel.mp3%20-%203%20am%20walk%20%28Slowed%20%26%20Reverb%20Version%29%20-%20128Kbps.mp3",
+				cover: "https://musicinsight.ir/wp-content/uploads/2023/10/Daniel.mp3-3-am-walk.jpg",
+				// 🟦 آبی نفتی → مشکی
+				colors: { dark: [8, 12, 24], mid: [15, 32, 60], light: [40, 85, 150] }
+			},
+			{
+				title: "Fortanach",
+				artist: "Sebastian Plano",
+				src: "https://dl.musicinsight.ir/Single/Sebastian%20Plano/Fortanach/Sebastian%20Plano%20-%20Fortanach%20-%20128Kbps.mp3",
+				cover: "https://musicinsight.ir/wp-content/uploads/2025/12/Sebastian-Plano-Fortanach-Cover.jpg",
+				// 🟨 زرد طلایی → خاکستری تیره
+				colors: { dark: [25, 22, 15], mid: [65, 55, 30], light: [180, 150, 60] }
+			},
+			{
+				title: "Horizons",
+				artist: "Diedlonely",
+				src: "https://dl.musicinsight.ir/Single/diedlonely/horizons/diedlonely%20-%20horizons%20-%20128Kbps.mp3",
+				cover: "https://musicinsight.ir/wp-content/uploads/2025/12/diedlonely-horizons-Cover.jpg",
+				// 🟣 بنفش → بنفش روشن (سفید-بنفش)
+				colors: { dark: [20, 10, 35], mid: [55, 25, 85], light: [160, 120, 210] }
+			},
+			{
+				title: "Stellar",
+				artist: "Diedlonely",
+				src: "https://dl.musicinsight.ir/Single/diedlonely/stellar/diedlonely%20-%20stellar%20-%20128Kbps.mp3",
+				cover: "https://musicinsight.ir/wp-content/uploads/2025/12/diedlonely-stellar-Cover.jpg",
+				// 🔵 آبی نفتی → سایان (Cyan)
+				colors: { dark: [5, 20, 30], mid: [10, 55, 75], light: [30, 140, 180] }
+			},
+			{
+				title: "On the Nature of Daylight",
+				artist: "Max Richter • Piano",
+				src: "https://dl.musicinsight.ir/Single/Max%20Richter/On%20the%20Nature%20of%20Daylight%20%28Piano%20Version%29/Max%20Richter%20-%20Richter%20On%20the%20Nature%20of%20Daylight%20%28Piano%20Version%29%20-%20128Kbps.mp3",
+				cover: "https://musicinsight.ir/wp-content/uploads/2025/12/Max-Richter-On-the-Nature-of-Daylight-Piano-Version-Cover.jpg",
+				// 🔵🟡 آبی نفتی → زرد
+				colors: { dark: [8, 15, 28], mid: [20, 45, 70], light: [200, 170, 50] }
+			},
+			{
+				title: "Don't Wake Me",
+				artist: "Musicinsight • 1 Hour",
+				src: "https://dl.musicinsight.ir/Single/Exclusive%20Radio/Dont%20Wake%20Me/Musicinsight%20-%20Dont%20Wake%20Me%20-%20Radio%20Exclusive%20-%20128Kbps.mp3",
+				cover: "https://musicinsight.ir/wp-content/uploads/2025/12/Dont-Wake-Me-Musicinsight-Cover.jpg",
+				// ⚫🔴 خاکستری → قرمز خونی
+				colors: { dark: [22, 15, 18], mid: [55, 25, 30], light: [185, 45, 50] }
+			}
+		];
+
+		let currentTrackIndex = 0;
+		let isPlaying = false;
+
+		const spotifyAudio = document.getElementById('spotifyAudio');
+		const spotifyPlayBtn = document.getElementById('spotifyPlayBtn');
+		const spotifyProgressFill = document.getElementById('spotifyProgressFill');
+		const spotifyProgressContainer = document.getElementById('spotifyProgressContainer');
+		const currentTimeSpotify = document.getElementById('currentTimeSpotify');
+		const durationSpotify = document.getElementById('durationSpotify');
+		const spotifyVolumeSlider = document.getElementById('spotifyVolumeSlider');
+		const spotifyVolumeIcon = document.getElementById('spotifyVolumeIcon');
+		const spotifyPlayer = document.getElementById('spotifyPlayer');
+		const coverArt = document.getElementById('coverArt');
+		const songTitle = document.getElementById('songTitle');
+		const songArtist = document.getElementById('songArtist');
+		const trackList = document.getElementById('trackList');
+
+		function formatTime(seconds) {
+			if (isNaN(seconds)) return "0:00";
+			const mins = Math.floor(seconds / 60);
+			const secs = Math.floor(seconds % 60);
+			return `${mins}:${secs < 10 ? '0' + secs : secs}`;
+		}
+
+		// تغییر رنگ باکس
+		function applyColors(colors) {
+			spotifyPlayer.style.transition = 'all 0.8s ease';
+			spotifyPlayer.style.background = `
+				linear-gradient(135deg, 
+					rgb(${colors.dark[0]}, ${colors.dark[1]}, ${colors.dark[2]}) 0%, 
+					rgb(${colors.mid[0]}, ${colors.mid[1]}, ${colors.mid[2]}) 100%
+				)
+			`;
+			spotifyPlayer.style.borderColor = `rgba(${colors.light[0]}, ${colors.light[1]}, ${colors.light[2]}, 0.4)`;
+			spotifyProgressFill.style.background = `
+				linear-gradient(90deg, 
+					rgb(${colors.light[0]}, ${colors.light[1]}, ${colors.light[2]}), 
+					rgb(${colors.mid[0]}, ${colors.mid[1]}, ${colors.mid[2]})
+				)
+			`;
+			spotifyProgressFill.style.boxShadow = `0 0 8px rgba(${colors.light[0]}, ${colors.light[1]}, ${colors.light[2]}, 0.4)`;
+		}
+
+		// لود آهنگ
+		function loadTrack(index) {
+			currentTrackIndex = index;
+			const track = playlist[index];
+			
+			spotifyAudio.src = track.src;
+			coverArt.src = track.cover;
+			songTitle.textContent = track.title;
+			songArtist.textContent = track.artist;
+			
+			applyColors(track.colors);
+			
+			document.querySelectorAll('.track-item').forEach((item, i) => {
+				item.classList.toggle('active', i === index);
+			});
+			
+			//document.title = `${track.artist} - ${track.title}`;
+		}
+
+		// آهنگ بعدی
+		function nextTrack() {
+			currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+			loadTrack(currentTrackIndex);
+			if (isPlaying) spotifyAudio.play();
+		}
+
+		// آهنگ قبلی
+		function prevTrack() {
+			currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+			loadTrack(currentTrackIndex);
+			if (isPlaying) spotifyAudio.play();
+		}
+
+		// Play/Pause
+		spotifyPlayBtn.addEventListener('click', () => {
+			if (spotifyAudio.paused) {
+				spotifyAudio.play();
+			} else {
+				spotifyAudio.pause();
+			}
+		});
+
+		function skipTime(seconds) {
+			spotifyAudio.currentTime = Math.max(0, Math.min(spotifyAudio.duration || 0, spotifyAudio.currentTime + seconds));
+		}
+
+		// Progress
+		spotifyAudio.addEventListener('timeupdate', () => {
+			if (!isNaN(spotifyAudio.duration)) {
+				const percent = (spotifyAudio.currentTime / spotifyAudio.duration) * 100;
+				spotifyProgressFill.style.width = percent + '%';
+				currentTimeSpotify.textContent = formatTime(spotifyAudio.currentTime);
+			}
+		});
+
+		spotifyAudio.addEventListener('loadedmetadata', () => {
+			durationSpotify.textContent = formatTime(spotifyAudio.duration);
+		});
+
+		spotifyProgressContainer.addEventListener('click', (e) => {
+			if (isNaN(spotifyAudio.duration)) return;
+			const rect = spotifyProgressContainer.getBoundingClientRect();
+			const percent = (e.clientX - rect.left) / rect.width;
+			spotifyAudio.currentTime = percent * spotifyAudio.duration;
+		});
+
+		// پایان آهنگ → آهنگ بعدی
+		spotifyAudio.addEventListener('ended', () => {
+			nextTrack();
+			spotifyAudio.play();
+		});
+
+		// Play/Pause icons
+		spotifyAudio.addEventListener('play', () => {
+			spotifyPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+			isPlaying = true;
+		});
+		spotifyAudio.addEventListener('pause', () => {
+			spotifyPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+			isPlaying = false;
+		});
+
+		// Volume
+		spotifyAudio.volume = 0.7;
+		spotifyVolumeSlider.addEventListener('input', () => {
+			spotifyAudio.volume = spotifyVolumeSlider.value / 100;
+			updateVolumeIcon();
+		});
+
+		spotifyVolumeIcon.addEventListener('click', () => {
+			if (spotifyAudio.volume > 0) {
+				spotifyAudio.volume = 0;
+				spotifyVolumeSlider.value = 0;
+			} else {
+				spotifyAudio.volume = 0.7;
+				spotifyVolumeSlider.value = 70;
+			}
+			updateVolumeIcon();
+		});
+
+		function updateVolumeIcon() {
+			const vol = spotifyAudio.volume;
+			const icon = spotifyVolumeIcon;
+			if (vol === 0) icon.className = 'fas fa-volume-mute';
+			else if (vol < 0.5) icon.className = 'fas fa-volume-down';
+			else icon.className = 'fas fa-volume-up';
+		}
+
+		// راه‌اندازی
+		loadTrack(0);
+        // ========== ANONYMOUS MESSAGE ==========
+        const anonymousInput = document.getElementById('anonymousMessage');
+        const charCount = document.getElementById('charCount');
+
+        anonymousInput.addEventListener('input', () => {
+            charCount.textContent = anonymousInput.value.length;
+        });
+
+		function sendAnonymousMessage() {
+			const message = anonymousInput.value.trim();
+			
+			if (!message) {
+				alert('😅 یه چیزی بنویس دیگه!');
+				return;
+			}
+			
+			const submitBtn = document.querySelector('.anonymous-submit');
+			const originalText = submitBtn.innerHTML;
+			submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ارسال...';
+			submitBtn.disabled = true;
+			
+			// ساخت FormData برای ارسال POST
+			const formData = new FormData();
+			formData.append('message', message);
+			
+			fetch('save_message.php', {
+				method: 'POST',
+				body: formData  // 👈 FormData استفاده کن، نه URL-encoded
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					alert('✅ پیام ناشناس با موفقیت ارسال شد!\n\n👻 هویتت محفوظه، قول می‌دم 😎');
+					anonymousInput.value = '';
+					charCount.textContent = '0';
+				} else {
+					alert('❌ خطا: ' + (data.error || 'مشکل نامشخص'));
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				alert('❌ خطا در ارتباط با سرور!');
+			})
+			.finally(() => {
+				submitBtn.innerHTML = originalText;
+				submitBtn.disabled = false;
+			});
+		}
+
+        console.log('🔥 Dark X Portfolio Ready!');
+        console.log('📐 Layout: 3 Columns (Left • Center • Right)');
+        console.log('🎵 Spotify Player • 👻 Anonymous Box');
+        console.log('👤 Profile: @H_LIMBO');
+    </script>
+</body>
+</html>
