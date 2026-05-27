@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>falling in space</title>
+    <style>
+
+        /* تنظیمات کلی برای ریسپانسیو بودن */
+        body, html { 
+            margin: 0; padding: 0; 
+            background: #010103; 
+            overflow: hidden; /* اسکرول را غیرفعال می‌کنیم */
+            height: 100vh; /* کل ارتفاع صفحه را اشغال می‌کند */
+            display: flex;
+            flex-direction: column; /* محتواها را عمودی بچیند */
+            justify-content: center; /* محتوا را وسط صفحه بیاورد */
+            align-items: center; /* محتوا را وسط صفحه بیاورد */
+	    font-family: 'MyCustomFont', sans-serif;
+            color: white; /* رنگ متن */
+            text-align: center; /* متن‌ها وسط چین */
+        }
+
+        /* Canvas تمام صفحه و ثابت */
+        canvas { 
+            position: fixed; 
+            top: 0; left: 0; 
+            pointer-events: none; /* اجازه کلیک روی canvas را نمی‌دهد */
+            width: 100%; /* عرض 100% صفحه */
+            height: 100%; /* ارتفاع 100% صفحه */
+            z-index: 0; /* در پس‌زمینه */
+        }
+.main-container {
+    position: fixed; /* یا absolute اگر می‌خواهید نسبت به یک عنصر والد دیگر فیکس باشد */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center; /* مرکز کردن افقی */
+    align-items: center; /* مرکز کردن عمودی */
+    z-index: 10; /* اطمینان از اینکه بالای محتوای دیگر است */
+    flex-direction: column; /* چیدمان عمودی برای عکس و متن‌ها */
+    box-sizing: border-box;
+}
+
+/* متن عنوان */
+.top-text {
+    font-size: clamp(3.8em, 5vw, 3em);
+    font-weight: bold;
+    margin-bottom: clamp(15px, 2vw, 25px);
+    padding: 0 50px;
+
+    /* گرادینت مدرن (مثلاً آبی-بنفش) */
+    background: linear-gradient(90deg, #ff000a, #ffe000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* عکس شخص، موقعیت‌دهی و اندازه قابل تنظیم */
+#person {
+    /* position: fixed; /* اگر main-container از fixed استفاده کند، این مورد نیاز نیست */
+    /* top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); /* این مرکزیت را تضمین می‌کند */
+    max-width: 80%; /* حداکثر عرض 20% صفحه */
+    max-height: 70vh; /* حداکثر ارتفاع 70% ارتفاع viewport */
+    object-fit: contain; /* اطمینان از اینکه عکس درون کادر جا شود بدون کشیدگی */
+    z-index: 5; /* زیر متن‌ها */
+    margin-bottom: 20px; /* فاصله بین عکس و متن */
+}
+
+    </style>
+</head>
+<body>
+    <canvas id="spaceCanvas"></canvas>
+    
+    <!-- عکس شخص در جایگاه ثابت خود -->
+    <img id="person" src="./assets/person1.png" alt="falling person">
+
+    <script>
+        const canvas = document.getElementById('spaceCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let animationFrameId;
+        const stars = [];
+        const numStars = 100; // تعداد ستاره‌ها را می‌توان تنظیم کرد
+        let centerX, centerY; // برای مرکز صفحه
+
+        // تابع تنظیم ابعاد canvas و متغیرهای وابسته
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            centerX = width / 2;
+            centerY = height / 2;
+
+            // اطمینان از اینکه اگر تعداد ستاره‌ها کم است، دوباره اضافه شوند
+            // (در حالت عادی نیازی نیست چون موقعیتشان تصادفی می‌شود)
+            // اگر هم تعداد زیاد بود، نباید کم شوند مگر اینکه بخواهیم.
+            // برای این مثال، تعداد ثابت نگه داشته می‌شود.
+
+            // همچنین موقعیت عکس و متن‌ها را با flexbox مدیریت می‌کنیم
+            // پس نیاز به تنظیم مستقیم موقعیت آنها در اینجا نیست.
+        }
+
+        // فراخوانی resize هنگام بارگذاری صفحه و تغییر اندازه پنجره
+        window.addEventListener('resize', resize);
+        resize(); // فراخوانی اولیه
+
+        // مقداردهی اولیه ستاره‌ها
+        for (let i = 0; i < numStars; i++) {
+            stars.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                size: Math.random() * 0.7 + 0.1, // حداقل اندازه 0.1
+                speed: Math.random() * 1 + 0.001, // حداقل سرعت 0.5
+                distanceFromCenter: 0 // محاسبه در تابع animate
+            });
+        }
+
+        // تابع انیمیشن اصلی
+        function animate() {
+            // پاک کردن canvas اصلی با رنگ پس‌زمینه
+            // این کار اطمینان می‌دهد که هر فریم کاملا تمیز شده و سپس ستاره‌ها رسم می‌شوند
+            ctx.fillStyle = '#010103'; 
+            ctx.fillRect(0, 0, width, height);
+
+            stars.forEach(star => {
+                // حرکت ستاره به سمت بالا
+                star.y -= star.speed; 
+
+                // اگر ستاره از بالای صفحه خارج شد، آن را به پایین صفحه برگردان
+                // و موقعیت افقی جدیدی به آن بده
+                if (star.y < 0) {
+                    star.y = height; // بازگشت به پایین صفحه
+                    star.x = Math.random() * width; // موقعیت افقی تصادفی جدید
+                    // می‌توان سرعت و اندازه را هم در اینجا برای تنوع تغییر داد
+                    // star.speed = Math.random() * 3 + 0.5;
+                    // star.size = Math.random() * 2.5 + 0.5;
+                }
+
+                // محاسبه فاصله ستاره از مرکز صفحه
+                const dx = star.x - centerX;
+                const dy = star.y - centerY;
+                star.distanceFromCenter = Math.sqrt(dx * dx + dy * dy);
+
+                // تنظیم شفافیت بر اساس فاصله از مرکز
+                // ستاره‌های دورتر، کم‌رنگ‌تر می‌شوند
+                const maxDistance = Math.sqrt(centerX * centerX + centerY * centerY); 
+                // ضریب 1.5 برای اینکه ستاره‌های دورتر خیلی سریع محو نشوند
+                let opacity = 1 - (star.distanceFromCenter / (maxDistance * 1.5)); 
+                opacity = Math.max(0.1, Math.min(opacity, 1)); // شفافیت بین 0.1 تا 1
+
+                ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // درخواست فریم بعدی انیمیشن
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        // شروع انیمیشن
+        animate();
+
+        // توقف انیمیشن هنگام بستن صفحه (برای جلوگیری از مصرف منابع اضافی)
+        window.addEventListener('beforeunload', () => {
+            cancelAnimationFrame(animationFrameId);
+        });
+    </script>
+	
+</body>
+</html>
